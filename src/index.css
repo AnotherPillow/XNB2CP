@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+img {
+  image-rendering: pixelated;
+}
+img.clickable:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}
+
+input.stardew[type=text], input.stardew[type=number], input.stardew:not([type]) {
+  background-color: #F9BA66;
+  outline: none;
+  border: 12px solid transparent;
+  border-image: url("../assets/textbox_border.png") 16 round;
+  border-radius: 20px;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.blur {
+  filter: blur(5px);
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  background-image: url("../assets/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.horizontal-border {
+  width: 100%;
+  height: 0px;
+  margin: 0;
+  padding: 0;
+  border-top: 12px solid transparent;
+  border-image: url("../assets/border-oneside.png") 16 round;
+  border-radius: 12px;
+}
+
+#main {
+  z-index: 2;
+  width: 80vw;
+  height: 80vh;
+  border: 16px solid transparent;
+  border-image: url("../assets/border.png") 16 round;
+  border-radius: 20px;
+  background-color: wheat;
+  padding: 30px;
+}
+#main #title h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+}
+#main h1, #main h2, #main h3, #main h4, #main h5, #main h6 {
+  color: #524b3f;
+}
+#main #columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(80vh - 150px);
+  gap: 20px;
+}
+#main #columns .column {
+  width: 50%;
+  height: calc(100% - 60px);
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  border: 12px solid transparent;
+  border-image: url("../assets/border.png") 16 round;
+  border-radius: 20px;
+}
+#main #columns .column.right #file-uploader-area {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+#main #columns .column.right #file-uploader-area .file-input {
+  opacity: 0;
+  width: 0;
+}
+#main #columns #manifest-form .form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#main #columns #manifest-form .form-row .form-input {
+  width: 70%;
+}
+#main #done {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main #done button {
+  outline: none;
+  border: none;
+  background: none;
+}
+#main #file-list {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 30vh;
+}
+#main #file-list ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+#main .file-area-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#main .file-area-bottom .download-a {
+  text-decoration: none;
+  cursor: default;
+}
+#main .file-area-bottom .download-a .download-h {
+  cursor: text;
+}
+#main .file-area-bottom .download-a .download-btn {
+  cursor: pointer;
+}
+#main .file-area-bottom .download-a .download-btn:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}
+
+.file-disabler {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+.file-disabler .file-disabler-margin {
+  margin-bottom: 50px;
+}
+.file-disabler *::selection {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+.file-disabler .file-cancel-btn, .file-disabler .file-cancel-btn-overlay {
+  position: absolute;
+  top: var(--top);
+  left: var(--left);
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes move-onscreen {
+  0% {
+    margin: 0;
+  }
+  100% {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+@keyframes move-offscreen {
+  0% {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+  100% {
+    margin: 0;
+  }
+}
+.credits-overlay {
+  z-index: 10;
+}
+.credits-overlay .github-link a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.credits-overlay .github-link i {
+  font-size: 5rem;
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  rotate: -45deg;
+}
+.credits-overlay .github-link i:hover {
+  animation: move-onscreen 0.5s ease-in-out forwards;
+}
+.credits-overlay .github-link i.leave {
+  animation: move-offscreen 0.5s ease-in-out forwards;
+}
+.credits-overlay .text-credits {
+  position: absolute;
+  width: 80vw;
+  top: calc((100vh - 80vh) / 2 + 80vh + 30px);
+  left: calc((100vw - 80vw) / 2);
+  color: black;
+  text-align: center;
+}
+.credits-overlay .text-credits a {
+  color: rgb(12, 12, 12);
+}
+.credits-overlay .background-credits {
+  z-index: 10;
+  position: absolute;
+  top: calc((100vh - 80vh) / 2);
+  left: calc(100vw - 0.8em);
+  width: 0.8em;
+  height: 80vh;
+  text-align: center;
+  color: black;
+}
+.credits-overlay .background-credits a {
+  color: rgb(12, 12, 12);
+}
+.credits-overlay .background-credits p {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  writing-mode: vertical-rl;
+}
+
+/*# sourceMappingURL=index.css.map */
