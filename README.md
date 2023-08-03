@@ -14,3 +14,4 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 ## Credits
 
 - XNB-js by [lybell-art](https://github.com/lybell-art/xnb-js)
+- [Custom Menu Background](https://www.nexusmods.com/stardewvalley/mods/7416) by [herbivoor](https://www.nexusmods.com/stardewvalley/users/78936668)

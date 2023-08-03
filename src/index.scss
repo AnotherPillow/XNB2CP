@@ -337,4 +337,32 @@ $main-color: #524b3f;
             color: rgb(12, 12, 12);
         }
     }
+
+    .background-credits {
+        z-index: 10;
+
+        position: absolute;
+
+        top: $main-top;
+        left: calc(100vw - 0.8em);
+
+        width: 0.8em;
+        height: $main-height;
+        
+        text-align: center;
+        color: black;
+
+        a {
+            color: rgb(12, 12, 12);
+        }
+
+        p {
+            margin: 0;
+
+            width: 100%;
+            height: 100%;
+
+            writing-mode: vertical-rl;
+        }
+    }
 }
