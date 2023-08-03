@@ -1,0 +1,13 @@
+{
+  "name": "xnb2cpweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch src:src"
+  },
+  "keywords": [],
+  "author": "AnotherPillow",
+  "license": "GPL-3.0"
+}

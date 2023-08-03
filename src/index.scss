@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+//add a function to do the border
+@mixin border_image($width: 16px) {
+    border: $width solid transparent;
+    
+    border-image: url('../assets/border.png') 16 round;
+    border-radius: 20px;
+}
+
+@mixin border_image_side($width: 16px, $side: top) {
+    border-#{$side}: $width solid transparent;
+
+    border-image: url('../assets/border-oneside.png') 16 round;
+    border-radius: $width;
+}
+
+@mixin textbox_border_image($width: 16px) {
+    border: $width solid transparent;
+
+    border-image: url('../assets/textbox_border.png') 16 round;
+    border-radius: 20px;
+}
+
+$STARDEW_INPUT_BG: #F9BA66;
+
+img {
+    image-rendering: pixelated;
+
+    &.clickable:hover {
+        cursor: pointer;
+
+        //make it have a slight dark overlay
+        filter: brightness(0.8);
+    }
+}
+
+input.stardew[type="text"], input.stardew[type="number"], input.stardew:not([type]) {
+        background-color: $STARDEW_INPUT_BG;
+        outline: none;
+        
+        @include textbox_border_image(12px);
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+
+    margin: 0;
+
+    overflow: hidden;
+}
+
+.blur {
+    filter: blur(5px);
+    z-index: 1;
+
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+
+    background-image: url('../assets/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position : center;
+    background-attachment: fixed;
+}
+
+.horizontal-border {
+    width: 100%;
+    height: 0px;
+
+    margin: 0;
+    padding: 0;
+
+    @include border_image_side(12px, top);
+    //@include border_image_side(8px, bottom);
+}
+
+$main-height: 80vh;
+$main-width: 80vw;
+
+$main-top: calc((100vh - #{$main-height}) / 2);
+$main-left: calc((100vw - #{$main-width}) / 2); 
+
+$main-color: #524b3f;
+
+#main {
+    
+    z-index: 2;
+
+    width: $main-width;
+    height: $main-height;
+
+    
+    @include border_image();
+
+    background-color: wheat;
+
+    padding: 30px;
+
+    #title {
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+        }
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        color: $main-color;
+    }
+
+    $available-col-height: calc(#{$main-height} - 150px);
+
+    #columns {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        height: $available-col-height;
+
+        gap: 20px;
+
+        .column {
+            width: 50%;
+            height: calc(100% - 60px);
+            
+
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            
+            align-items: center;
+
+            @include border_image(12px);
+
+            &.right {
+                #file-uploader-area {
+                    //stick it in the top right
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+
+                    .file-input {
+                        opacity:0;
+                        width: 0;        
+                    }
+                }
+            }
+        }
+
+        #manifest-form {
+            .form-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                margin-bottom: 20px;
+
+                .form-input {
+                    width: 70%;
+                }
+            }
+        }
+    }
+
+    #done {
+        width: 100%;
+        height: 50px;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        button {
+            outline: none;
+            border: none;
+            background: none;
+        }
+
+    }
+    #file-list {
+        overflow-y: scroll;
+        
+        scrollbar-width: none;
+
+        height: 30vh;
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    }
+    
+
+    .file-area-bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .download-a {
+            text-decoration: none;
+            cursor: default;
+
+            .download-h {
+                cursor: text;
+            }
+
+            .download-btn {
+                cursor: pointer;
+
+                &:hover {
+                    cursor: pointer;
+                    filter: brightness(0.8);
+                }
+            }
+        }
+
+    }
+
+
+}
+
+.file-disabler {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    position: fixed;
+    inset: 0;
+
+    height: 100vh;
+    width: 100vw;
+    
+
+    z-index: 998;
+
+    $overlay-bg: #00000099;
+
+    background-color: $overlay-bg;
+    color: white;
+
+    .file-disabler-margin {
+        margin-bottom: 50px;
+    }
+
+    & *::selection {
+        background-color: $overlay-bg;
+        color: white;
+    }
+
+    .file-cancel-btn, .file-cancel-btn-overlay {
+        position: absolute;
+        top: var(--top);
+        left: var(--left);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes move-onscreen {
+    0% {
+        margin: 0;
+    }
+    100% {
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@keyframes move-offscreen {
+    0% {
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+    100% {
+        margin: 0;
+    }
+}
+
+.credits-overlay {
+    z-index: 10;
+
+    .github-link {
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        i {
+            font-size: 5rem;
+            position: absolute;
+
+            bottom: -1.5rem;
+            right: -1.5rem;
+
+            rotate: -45deg;
+
+            //run move-screen when hovered, and the reverse when not hovered
+            &:hover {
+                animation: move-onscreen 0.5s ease-in-out forwards;
+            }
+
+            &.leave {
+                animation: move-offscreen 0.5s ease-in-out forwards;
+            }
+        }
+    }
+
+    .text-credits {
+        position: absolute;
+        width: $main-width;
+
+        top: calc($main-top + $main-height + 30px);
+        left: $main-left;
+        
+        color: black;
+        text-align: center;
+
+        a {
+            color: rgb(12, 12, 12);
+        }
+    }
+}
