@@ -121,7 +121,7 @@ $main-color: #524b3f;
 
             a {
                 color: inherit;
-                
+
             }
             
         }
@@ -177,6 +177,10 @@ $main-color: #524b3f;
                 align-items: center;
 
                 margin-bottom: 20px;
+
+                label {
+                    margin-right: 0.5em;
+                }
 
                 .form-input {
                     width: 70%;
