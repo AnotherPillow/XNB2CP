@@ -5,9 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "sass --watch src:src"
+    "sass": "sass --watch src:src",
+    "build": "sass src:src"
   },
   "keywords": [],
   "author": "AnotherPillow",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "sass": "^1.69.5"
+  }
 }
