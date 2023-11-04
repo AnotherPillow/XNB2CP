@@ -114,13 +114,24 @@ $main-color: #524b3f;
             font-weight: 700;
             text-align: center;
         }
+
+        h3 {
+            text-align: center;
+            margin: 0;
+
+            a {
+                color: inherit;
+                
+            }
+            
+        }
     }
 
     h1,h2,h3,h4,h5,h6 {
         color: $main-color;
     }
 
-    $available-col-height: calc(#{$main-height} - 150px);
+    $available-col-height: calc(#{$main-height} - 180px);
 
     #columns {
         display: flex;
