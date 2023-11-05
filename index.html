@@ -22,9 +22,9 @@
                 height="50"
             />
             <div class="file-disabler-margin">
-                <h1>Please choose the "Content" folder of the XNB mod you want to convert</h1>
+                <h1 data-translation-key="choose-content-folder.h1"></h1>
                 <br/>
-                <h2>File upload dialog has been opened</h2>
+                <h2 data-translation-key="file-upload-dialog-opened.h2"></h2>
             </div>
         </div>
         <div class="blur"></div>
@@ -36,42 +36,42 @@
             </div>
 
             <div class="background-credits">
-                <p>Background image is made using assets from <a href="https://www.nexusmods.com/stardewvalley/mods/7416" target="_blank">Custom Menu Background</a>.</p>
+                <p data-translation-key="background-credits.p"></p>
             </div>
 
             <div class="text-credits">
-                <p>XNB2CP Web is made possible by <a href="https://github.com/lybell-art/xnb-js" target="_blank">xnb-js</a> by lybell-art which is based on <a href="https://github.com/LeonBlade/xnbcli" target="_blank">xnbcli</a> by LeonBlade. <a href="https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher" target="_blank">Content Patcher</a> is made by Pathoschild.</p>
+                <p data-translation-key="text-mod-credits.p"></p>
             </div>
         </div>
 
         <div id="main">
             <div id="title">
-                <h1>XNB2CP Web</h1>
-                <h3><a href="https://github.com/anotherpillow/xnb2cp#usage" target="_blank">Usage guide</a></h3>
+                <h1 data-translation-key="title.h1"></h1>
+                <h3><a href="https://github.com/anotherpillow/xnb2cp#usage" target="_blank" data-translation-key="usage-guide.h3"></a></h3>
             </div>
             <div id="columns">
                 <div class="column left">
-                    <h2>Manifest</h2>
+                    <h2 data-translation-key="manifest.h2"></h2>
 
                     <form id="manifest-form">
                         <div class="form-row">
-                            <label for="manifest-name">Name</label>
-                            <input class="stardew form-label" type="text" id="manifest-name" name="manifest_name" placeholder="An XNB Mod" value="An XNB Mod" required>
+                            <label for="manifest-name" data-translation-key="name.label"></label>
+                            <input class="stardew form-label" type="text" id="manifest-name" name="manifest_name" data-translation-key="name-placeholder-value.input" required>
                         </div>
                         <div class="form-row">
-                            <label for="manifest-author">Author</label>
-                            <input class="stardew form-input" type="text" id="manifest-author" name="manifest_author" placeholder="UnconcernedApe" value="UnconcernedApe" required>
+                            <label for="manifest-author" data-translation-key="author.label"></label>
+                            <input class="stardew form-input" type="text" id="manifest-author" name="manifest_author" data-translation-key="author-placeholder-value.input" >
                         </div>
                         <div class="form-row">
-                            <label for="manifest-version">Version</label>
-                            <input class="stardew form-input" type="text" id="manifest-version" name="manifest_version" placeholder="1.0.0" value="1.0.0" required>
+                            <label for="manifest-version" data-translation-key="version.label"></label>
+                            <input class="stardew form-input" type="text" id="manifest-version" name="manifest_version" data-translation-key="version-placeholder-value.input" required>
                         </div>
 
-                        <input id="manifest-form-submit" class="hidden" type="submit" value="DO NOT CLICK">
+                        <input id="manifest-form-submit" class="hidden" type="submit" data-translation-key="DO NOT CLICK">
                     </form> 
                 </div>  
                 <div class="column right">
-                    <h2>Files</h2>
+                    <h2 data-translation-key="files.h2"></h2>
                     <span id="file-uploader-area">
                         <label for="file-input" class="file-label">
                             <img 
@@ -96,9 +96,9 @@
                         <table id="file-table" style="display:none;">
                             <thead>
                                 <tr>
-                                    <th>File</th>
-                                    <th>Size</th>
-                                    <th>Path</th>
+                                    <th data-translation-key="file.th"></th>
+                                    <th data-translation-key="size.th"></th>
+                                    <th data-translation-key="path.th"></th>
                                 </tr>
                             </thead>
                             <tbody id="file-table-body">
@@ -132,6 +132,7 @@
         </div>
 
         <!-- import https://unpkg.com/file-saver@2.0.0-rc.2/dist/FileSaver.js as FileSaver -->
+        <script type="module" src="src/translations.js"></script>
         <script type="module" src="src/imports.js"></script>
         <script src="https://unpkg.com/jszip@3.7.1/dist/jszip.js"></script>
         <script src="src/script.js"></script>

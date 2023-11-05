@@ -1,0 +1,28 @@
+{
+    "choose-content-folder.h1": "Please choose the \"Content\" folder of the XNB mod you want to convert",
+    "file-upload-dialog-opened.h2": "File upload dialog has been opened",
+    "background-credits.p": "Background image is made using assets from <a href=\"https://www.nexusmods.com/stardewvalley/mods/7416\" target=\"_blank\">Custom Menu Background</a>.",
+    "text-mod-credits.p": "XNB2CP Web is made possible by <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> by lybell-art which is based on <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> by LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> is made by Pathoschild.",
+
+    "title.h1": "XNB2CP Web",
+    "usage-guide.h3": "Usage guide",
+    
+    "manifest.h2": "Manifest",
+    
+    "name.label": "Name",
+    "name-placeholder-value.input": "An XNB Mod",
+    
+    "author.label": "Author",
+    "author-placeholder-value.input": "UnconcernedApe",
+
+    "version.label": "Version",
+    "version-placeholder-value.input": "1.0.0",
+
+    "hidden-submission-value.input": "DO NOT CLICK",
+
+    "files.h2": "Files",
+    "file.th": "File",
+    "size.th": "Size",
+    "path.th": "Path"
+
+}
