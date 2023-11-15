@@ -15,3 +15,11 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 
 - XNB-js by [lybell-art](https://github.com/lybell-art/xnb-js)
 - [Custom Menu Background](https://www.nexusmods.com/stardewvalley/mods/7416) by [herbivoor](https://www.nexusmods.com/stardewvalley/users/78936668)
+
+## Translations
+
+1. Fork this repository
+2. Clone `i18n/en.json`, and rename it to `[language code].json`
+    - The "language code" is the first half of `window.navigator` (check by just running this in your browser console)
+3. Replace the English text with it of your language.
+4. Create a pull request.
