@@ -1,0 +1,28 @@
+{
+    "choose-content-folder.h1": "Пожалуйста выберете папку \"Content\" XNB мода который вы хотите конвертировать",
+    "file-upload-dialog-opened.h2": "Диалог загрузки файла был открыт",
+    "background-credits.p": "Изаброжение на фоне было сделано используя ресурсы из <a href=\"https://www.nexusmods.com/stardewvalley/mods/7416\" target=\"_blank\">Custom Menu Background</a>.",
+    "text-mod-credits.p": "XNB2CP сеть была сделана с помощью <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> by lybell-art which is based on <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> by LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> is made by Pathoschild.",
+
+    "title.h1": "XNB2CP сеть",
+    "usage-guide.h3": "Инструкция для использоваенья",
+    
+    "manifest.h2": "Декларация",
+    
+    "name.label": "Название",
+    "name-placeholder-value.input": "XNB мод",
+    
+    "author.label": "Автор",
+    "author-placeholder-value.input": "UnconcernedApe",
+
+    "version.label": "Версия",
+    "version-placeholder-value.input": "1.0.0",
+
+    "hidden-submission-value.input": "НЕ НАЖИМАЙТЕ",
+
+    "files.h2": "Файлы",
+    "file.th": "Файл",
+    "size.th": "Обьём",
+    "path.th": "Путь"
+
+}

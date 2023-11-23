@@ -15,7 +15,8 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 
 - XNB-js by [lybell-art](https://github.com/lybell-art/xnb-js)
 - [Custom Menu Background](https://www.nexusmods.com/stardewvalley/mods/7416) by [herbivoor](https://www.nexusmods.com/stardewvalley/users/78936668)
-- Polish translation by @amonochromatic on Discord.
+- Polish translation by [@amonochromatic](https://discord.com/users/566188247097540620) on Discord.
+- Russian translation by [@bezdelnikx](https://github.com/bezdelnikx)
 
 ## Translations
 
