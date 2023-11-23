@@ -1,0 +1,28 @@
+{
+    "choose-content-folder.h1": "Wybierz folder \"Content\" zawierający mod XNB który chcesz przemienić.",
+    "file-upload-dialog-opened.h2": "Otworzyło się okno przesyłania plików.",
+    "background-credits.p": "Tło jest stworzone dzięki zasobom z <a href=\"https://www.nexusmods.com/stardewvalley/mods/7416\" target=\"_blank\">Custom Menu Background</a>.",
+    "text-mod-credits.p": "XNB2CP Web jest możliwe dzięki <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> stworzone przez lybell-art, co jest bazowane na <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> stworzone przez LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> jest stworzony przez Pathoschild.",
+
+    "title.h1": "XNB2CP Web",
+    "usage-guide.h3": "Sposób Użycia",
+    
+    "manifest.h2": "Manifest",
+    
+    "name.label": "Nazwa",
+    "name-placeholder-value.input": "Mod XNB",
+    
+    "author.label": "Autor",
+    "author-placeholder-value.input": "UnconcernedApe",
+
+    "version.label": "Wersja",
+    "version-placeholder-value.input": "1.0.0",
+
+    "hidden-submission-value.input": "NIE KLIKAJ",
+
+    "files.h2": "Pliki",
+    "file.th": "Plik",
+    "size.th": "Rozmiar",
+    "path.th": "Ścieżka"
+
+}
