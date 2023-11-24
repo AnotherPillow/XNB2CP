@@ -23,6 +23,7 @@
     "files.h2": "Dateien",
     "file.th": "Datei",
     "size.th": "Größe",
-    "path.th": "Weg"
+    "path.th": "Weg",
 
+    "language.h2": "Sprache"
 }

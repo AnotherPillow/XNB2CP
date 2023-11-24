@@ -23,6 +23,7 @@
     "files.h2": "Files",
     "file.th": "File",
     "size.th": "Size",
-    "path.th": "Path"
-
+    "path.th": "Path",
+    
+    "language.h2": "Language"
 }

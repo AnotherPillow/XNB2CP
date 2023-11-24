@@ -1,4 +1,5 @@
 /// <reference path="imports.js" />
+/// <reference path="translations.js" />
 
 const fileinput = document.querySelector('#file-input');
 const filedisabler_overlay = document.querySelector('.file-disabler');
@@ -14,6 +15,10 @@ const file_download_area = document.querySelector('#file-download-area');
 const file_area_topbottom_seperator = document.querySelector('#file-area-topbottom-seperator');
 const file_area_bottom = document.querySelector('.file-area-bottom');
 const github_link = document.querySelector('.github-link i');
+const language_btn = document.querySelector('.language-btn i');
+const language_button = document.querySelector('.language-btn');
+const language_popup = document.querySelector('#language-popup');
+const language_list = document.querySelector('#languages');
 
 const valid_content_folders = ['Animals', 'Characters', 'Effects', 'LooseSprites', 'Minigames', 'Strings', 'TileSheets', 'Buildings', 'Data', 'Fonts', 'Maps', 'Portraits', 'TerrainFeatures', 'VolcanoLayouts']
 const valid_file_types = [
@@ -210,12 +215,40 @@ function hideDisablerOverlay() {
 
 fileinput.addEventListener('click', showDisablerOverlay);
 
-github_link.addEventListener('mouseleave', function () {
+[ github_link, language_btn ].forEach(e => e.addEventListener('mouseleave', function () {
     this.classList.add('leave');
     setTimeout(() => {
         this.classList.remove('leave');
     }, 500);
-});
+}));
+
+language_button.addEventListener('click', () => {
+    language_popup.classList.toggle('hidden')
+})
+
+document.body.addEventListener('click', e => {
+    if (e.target.id !== language_popup.id
+        && !language_button.contains(e.target)
+        && !language_popup.contains(e.target)
+        && !language_popup.classList.contains('hidden')
+        ) language_popup.classList.add('hidden')
+})
+
+for (const key of Object.keys(supported_languages)) {
+    const lang = supported_languages[key]
+    const li = document.createElement('li')
+
+    li.id = `language-${key}`
+    li.classList.add('language-list-element')
+
+    li.innerHTML = `<h1>${lang['flag']}</h1>`
+
+    li.addEventListener('click', () => {
+        loadTranslations(key)
+    })
+
+    language_list.appendChild(li)
+}
 
 function clean_uid(input) {
     //replace spaces with underscores, and anything else that ISNT \w with .

@@ -23,6 +23,7 @@
     "files.h2": "Файлы",
     "file.th": "Файл",
     "size.th": "Обьём",
-    "path.th": "Путь"
-
+    "path.th": "Путь",
+    
+    "language.h2": "язык"
 }

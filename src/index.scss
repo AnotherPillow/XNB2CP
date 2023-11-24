@@ -293,6 +293,7 @@ $main-color: #524b3f;
     }
     100% {
         margin-right: 1rem;
+        margin-left: 1rem;
         margin-bottom: 1rem;
     }
 }
@@ -300,6 +301,7 @@ $main-color: #524b3f;
 @keyframes move-offscreen {
     0% {
         margin-right: 1rem;
+        margin-left: 1rem;
         margin-bottom: 1rem;
     }
     100% {
@@ -310,7 +312,7 @@ $main-color: #524b3f;
 .credits-overlay {
     z-index: 10;
 
-    .github-link {
+    .corner-link {
 
         a {
             text-decoration: none;
@@ -323,11 +325,9 @@ $main-color: #524b3f;
             position: absolute;
 
             bottom: -1.5rem;
-            right: -1.5rem;
 
-            rotate: -45deg;
+            rotate: var(--rotation);
 
-            //run move-screen when hovered, and the reverse when not hovered
             &:hover {
                 animation: move-onscreen 0.5s ease-in-out forwards;
             }
@@ -335,6 +335,29 @@ $main-color: #524b3f;
             &.leave {
                 animation: move-offscreen 0.5s ease-in-out forwards;
             }
+        }
+    }
+
+    .github-link {
+        i {
+            --rotation: -45deg;
+            right: -1.5rem;
+        }
+    }
+    
+    .language-btn {
+        i {
+            --rotation: 45deg;
+            left: -1.0rem;
+        }
+
+        button {
+            outline: none;
+            border: none;
+            color: inherit;
+            background-color: transparent;
+
+            cursor: pointer;
         }
     }
 
@@ -380,4 +403,44 @@ $main-color: #524b3f;
             writing-mode: vertical-rl;
         }
     }
+}
+
+#language-popup {
+    z-index: 100;
+    
+    position: absolute;
+    left: 2em;
+    bottom: 2em;
+
+    width: 10em;
+    height: 20em;
+    
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+    @include border_image();
+    background-color: wheat;
+    padding: 30px;
+
+    text-align: center;
+
+    #languages {
+        list-style-type: none;
+        
+        padding-left: 0;
+        font-size: 1.5em;
+
+        li:not(:last-child) {
+            margin-bottom: -1em;
+        }
+
+        li {
+            cursor: pointer;
+
+            &:hover {
+                filter: brightness(0.8);
+            }
+        }
+    }
+
 }

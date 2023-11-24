@@ -29,10 +29,16 @@
         </div>
         <div class="blur"></div>
         <div class="credits-overlay">
-            <div class="github-link">
+            <div class="github-link corner-link">
                 <a href="https://github.com/anotherpillow/xnb2cp" target="_blank">
                     <i class="fa-brands fa-github"></i>
                 </a>
+            </div>
+            
+            <div class="language-btn corner-link">
+                <button>
+                    <i class="fa-solid fa-globe"></i>
+                </button>
             </div>
 
             <div class="background-credits">
@@ -131,11 +137,16 @@
             </div>
         </div>
 
+        <div id="language-popup" class="hidden">
+            <h2 data-translation-key="language.h2"></h2>
+            <ul id="languages"></ul>
+        </div>
+
         <!-- import https://unpkg.com/file-saver@2.0.0-rc.2/dist/FileSaver.js as FileSaver -->
-        <script type="module" src="src/translations.js"></script>
+        <script src="src/translations.js"></script>
         <script type="module" src="src/imports.js"></script>
         <script src="https://unpkg.com/jszip@3.7.1/dist/jszip.js"></script>
-        <script src="src/script.js"></script>
         <script src="https://unpkg.com/file-saver@2.0.0-rc.2/dist/FileSaver.js"></script>
+        <script src="src/script.js"></script>
     </body>
 </html>
