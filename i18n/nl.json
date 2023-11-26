@@ -1,0 +1,29 @@
+{
+    "choose-content-folder.h1": "Kies de \"Content\" map van de XNB mod die je wilt converteren",
+    "file-upload-dialog-opened.h2": "Bestandsuploadvenster is geopened",
+    "background-credits.p": "Achtergrondafbeelding is gemaakt met de middelen van <a href=\"https://www.nexusmods.com/stardewvalley/mods/7416\" target=\"_blank\">Custom Menu Background</a>.",
+    "text-mod-credits.p": "XNB2CP Web is mede mogelijk gemaakt door <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> door lybell-art wat gebaseerd is op <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> door LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> is gemaakt door Pathoschild.",
+
+    "title.h1": "XNB2CP Web",
+    "usage-guide.h3": "Gebruiksaanwijzing",
+    
+    "manifest.h2": "Manifest",
+    
+    "name.label": "Naam",
+    "name-placeholder-value.input": "An XNB Mod",
+    
+    "author.label": "Auteur",
+    "author-placeholder-value.input": "UnconcernedApe",
+
+    "version.label": "Versie",
+    "version-placeholder-value.input": "1.0.0",
+
+    "hidden-submission-value.input": "NIET KLIKKEN",
+
+    "files.h2": "Bestanden",
+    "file.th": "Bestand",
+    "size.th": "Grootte",
+    "path.th": "Pad",
+    
+    "language.h2": "Taal"
+}
