@@ -11,6 +11,9 @@ const supported_languages = {
     'ru': {
         "flag": "🇷🇺"
     },
+    'nl': {
+        "flag": "🇳🇱"
+    },
 }
 
 const lang = navigator.language.split('-')[0]

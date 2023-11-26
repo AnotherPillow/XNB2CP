@@ -181,10 +181,8 @@ function populateFilesTable(files) {
 
 console.log(fileinput)
 fileinput.addEventListener('change', function () {
-    //log all the files and their paths
     hideDisablerOverlay();
 
-    
     Array.from(this.files).forEach(file => {
         if (!valid_file_types.includes(file.name.split('.').pop())) return;
 
@@ -231,7 +229,7 @@ document.body.addEventListener('click', e => {
         && !language_button.contains(e.target)
         && !language_popup.contains(e.target)
         && !language_popup.classList.contains('hidden')
-        ) language_popup.classList.add('hidden')
+    ) language_popup.classList.add('hidden')
 })
 
 for (const key of Object.keys(supported_languages)) {
@@ -251,7 +249,6 @@ for (const key of Object.keys(supported_languages)) {
 }
 
 function clean_uid(input) {
-    //replace spaces with underscores, and anything else that ISNT \w with .
     return input.replace(/\s/g, '_').replace(/[^\w]/g, '.');
 }
 

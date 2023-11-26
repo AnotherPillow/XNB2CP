@@ -19,8 +19,9 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 ## Traslations
 
 - Polish translation by [@amonochromatic](https://discord.com/users/566188247097540620) on Discord.
-- Russian translation by [@bezdelnikx](https://github.com/bezdelnikx)
+- Russian translation by [@bezdelnikx](https://github.com/bezdelnikx).
 - German translation by [@hellevator.](https://discord.com/users/549331533635518484) on Discord.
+- Dutch translation by [@ChristanVersteeg](https://github.com/ChristanVersteeg).
 
 ### How to translate
 
