@@ -2,10 +2,10 @@
     "choose-content-folder.h1": "Wybierz folder \"Content\" zawierający mod XNB który chcesz przemienić.",
     "file-upload-dialog-opened.h2": "Otworzyło się okno przesyłania plików.",
     "background-credits.p": "Tło jest stworzone dzięki zasobom z <a href=\"https://www.nexusmods.com/stardewvalley/mods/7416\" target=\"_blank\">Custom Menu Background</a>.",
-    "text-mod-credits.p": "XNB2CP Web jest możliwe dzięki <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> stworzone przez lybell-art, co jest bazowane na <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> stworzone przez LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> jest stworzony przez Pathoschild.",
+    "text-mod-credits.p": "XNB2CP Web jest możliwe dzięki <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> stworzone przez lybell-art, bazowane na <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> autorstwa LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> jest stworzony przez Pathoschild.",
 
     "title.h1": "XNB2CP Web",
-    "usage-guide.h3": "Sposób Użycia",
+    "usage-guide.h3": "Jak użyć?",
     
     "manifest.h2": "Manifest",
     
