@@ -29,4 +29,6 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 2. Clone `i18n/en.json`, and rename it to `[language code].json`
     - The "language code" is the first half of `window.navigator` (check by just running this in your browser console)
 3. Replace the English text with it of your language.
-4. Create a pull request.
+4. Add a corresponding flag in `translations.js`.
+5. Add yourself to the [README Credits](#credits).
+6. Create a pull request.
