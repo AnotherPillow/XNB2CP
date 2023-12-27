@@ -242,6 +242,7 @@ for (const key of Object.keys(supported_languages)) {
     li.innerHTML = `<h1>${lang['flag']}</h1>`
 
     li.addEventListener('click', () => {
+        localStorage.setItem('chosen-language', key)
         loadTranslations(key)
     })
 

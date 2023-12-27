@@ -60,4 +60,4 @@ window.loadTranslations = async (_lang = lang) => {
     })
 }
 
-loadTranslations()
+loadTranslations(localStorage.getItem('chosen-language') ?? lang)
