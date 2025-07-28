@@ -1,9 +1,13 @@
 /// <reference path="imports.js" />
 /// <reference path="translations.js" />
+/// <reference path="util.js" />
+/// <reference path="patcher.js" />
 
-const fileinput = document.querySelector('#file-input');
+const modfileinput = document.querySelector('#xnb-file-input');
+const contentfileinput = document.querySelector('#content-file-input');
 const filedisabler_overlay = document.querySelector('.file-disabler');
-const fileupload_btn = document.querySelector('.file-btn');
+const fileupload_btn = document.querySelector('#mod-file-btn');
+const contentfileupload_btn = document.querySelector('#content-file-btn');
 const filecancel_btn = document.querySelector('.file-cancel-btn');
 const filecancel_btn_overlay = document.querySelector('.file-cancel-btn-overlay');
 const done_btn = document.querySelector('#done-btn');
@@ -19,17 +23,7 @@ const language_btn = document.querySelector('.language-btn i');
 const language_button = document.querySelector('.language-btn');
 const language_popup = document.querySelector('#language-popup');
 const language_list = document.querySelector('#languages');
-
-const valid_content_folders = ['Animals', 'Characters', 'Effects', 'LooseSprites', 'Minigames', 'Strings', 'TileSheets', 'Buildings', 'Data', 'Fonts', 'Maps', 'Portraits', 'TerrainFeatures', 'VolcanoLayouts']
-const valid_file_types = [
-    'xnb',
-    'json',
-    'png',
-    'tbin',
-    'tmx',
-    'tsx',
-    'xwb',
-]
+const img_diff_canvas = document.querySelector('#image-diff-holder')
 
 manifest_form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -46,6 +40,19 @@ const file_area_bottom_size = columns_right_bottom - file_area_topbottom_seperat
 
 file_area_bottom.setAttribute('style', `height: ${file_area_bottom_size}px;`);
 
+/**
+ * @param {string} cut_path 
+ * @param {Blob} blob 
+ */
+function getNonXnbExtension(cut_path, blob) {
+    console.log('blob type: ', blob.type)
+    const newExtension = {
+        'Texture2D': '.png',
+        'xTile.Pipeline.TideReader': '.tbin',
+    }[blob.type] ?? '.json'
+    return cut_path.replace(/\.xnb$/, newExtension)
+}
+
 class Pack {
     files = [];
     xnbs = [];
@@ -61,7 +68,7 @@ class Pack {
             "Name": manifest_info.manifest_name,
             "Author": manifest_info.manifest_author,
             "Version": manifest_info.manifest_version,
-            "Description": `${manifest_info.manifest_name} converted to Content Patcher by XNB2CP-Web`,
+            "Description": `${manifest_info.manifest_name} converted to Content Patcher by XNB2CP (https://xnb.pillow.rocks)`,
             "UniqueID": clean_uid(manifest_info.manifest_author + '.' + manifest_info.manifest_name),
             "UpdateKeys": [ ],
             "ContentPackFor": {
@@ -82,23 +89,20 @@ class Pack {
             }
             //rejoin the path
             const cut_path = path_split.join('/');
+            const blob = await XNB.unpackToContent(xnb)
 
             return {
-                file: await XNB.unpackToContent(xnb),
+                file: blob,
                 // source: xnb.webkitRelativePath.replace(/\.xnb$/, '.png'),
                 target: cut_path,
-                asset: `assets/${cut_path.replace(/\.xnb$/, '.png')}`
+                asset: `assets/${getNonXnbExtension(cut_path, blob)}`
             };
         }));
 
         this.content = {
             "Format": "1.28.0",
             "Changes": await Promise.all(this.files.map(async file => {
-                return {
-                    "Action": "Load",
-                    "Target": file.target,
-                    "FromFile": file.asset
-                }
+                return await generateChange(file)
             }))
         }
 
@@ -179,8 +183,8 @@ function populateFilesTable(files) {
     }
 }
 
-console.log(fileinput)
-fileinput.addEventListener('change', function () {
+modfileinput.addEventListener('change', function () {
+    // `this` is in refence to modfileinput, for clarification
     hideDisablerOverlay();
 
     Array.from(this.files).forEach(file => {
@@ -190,16 +194,25 @@ fileinput.addEventListener('change', function () {
     })
 
     populateFilesTable(xnb_files);
-
 });
 
-function showDisablerOverlay() {
+contentfileinput.addEventListener('change', function () {
+    hideDisablerOverlay();
+
+    // `this` is in refence to modfileinput, for clarification
+    Array.from(this.files).forEach(file => {
+        CONTENT_FOLDER.set(cleanXnbPath(file.webkitRelativePath.split('/').slice(1).join('/')), file)
+    })
+})
+
+function showDisablerOverlay(overlayer = fileupload_btn, translationKey = 'choose-content-folder-xnb.h1') {
     filedisabler_overlay.classList.remove('hidden');
 
     //get x/y of .file-btn
-    var rect = fileupload_btn.getBoundingClientRect();
+    var rect = overlayer.getBoundingClientRect();
     
     filedisabler_overlay.style = `--top: ${rect.top}px; --left: ${rect.left}px;`;
+    filedisabler_overlay.querySelector('#big-file-disabler-text').innerText = window.xtranslations[translationKey]
 }
 
 function hideDisablerOverlay() {
@@ -207,11 +220,14 @@ function hideDisablerOverlay() {
 }
 
 [ filecancel_btn, filecancel_btn_overlay ].forEach(btn => btn.addEventListener('click', function () {
-    fileinput.value = "";
+    modfileinput.value = "";
     hideDisablerOverlay();
 }));
 
-fileinput.addEventListener('click', showDisablerOverlay);
+modfileinput.addEventListener('click', () => 
+    showDisablerOverlay(fileupload_btn, 'choose-content-folder-xnb.h1'));
+contentfileinput.addEventListener('click', () => 
+    showDisablerOverlay(contentfileupload_btn, 'choose-content-folder-content.h1'));
 
 [ github_link, language_btn ].forEach(e => e.addEventListener('mouseleave', function () {
     this.classList.add('leave');
@@ -247,18 +263,4 @@ for (const key of Object.keys(supported_languages)) {
     })
 
     language_list.appendChild(li)
-}
-
-function clean_uid(input) {
-    return input.replace(/\s/g, '_').replace(/[^\w]/g, '.');
-}
-
-function blobToBase64(blob) {
-    console.log(blob)
-    return new Promise((resolve, _) => {
-        const reader = new FileReader();
-        if (blob.content) reader.readAsDataURL(blob.content);
-        else reader.readAsDataURL(blob);
-        reader.onloadend = () => resolve(reader.result);
-    });
 }

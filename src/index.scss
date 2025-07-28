@@ -23,6 +23,7 @@
 }
 
 $STARDEW_INPUT_BG: #F9BA66;
+$COLUMN_PADDING: 10px;
 
 img {
     image-rendering: pixelated;
@@ -36,10 +37,10 @@ img {
 }
 
 input.stardew[type="text"], input.stardew[type="number"], input.stardew:not([type]) {
-        background-color: $STARDEW_INPUT_BG;
-        outline: none;
-        
-        @include textbox_border_image(12px);
+    background-color: $STARDEW_INPUT_BG;
+    outline: none;
+    
+    @include textbox_border_image(12px);
 }
 
 body {
@@ -76,7 +77,7 @@ body {
 }
 
 .horizontal-border {
-    width: 100%;
+    width: calc(100% + (#{$COLUMN_PADDING} * 2));
     height: 0px;
 
     margin: 0;
@@ -142,10 +143,25 @@ $main-color: #524b3f;
 
         gap: 20px;
 
+        .file-uploader-area {
+            //stick it in the top right
+            
+            &#mod-file-uploader-area {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            .file-input {
+                opacity: 0;
+                width: 0;        
+            }
+        }
+
         .column {
             width: 50%;
             height: calc(100% - 60px);
-            
+            padding: 0 $COLUMN_PADDING;
 
             display: flex;
             position: relative;
@@ -156,17 +172,7 @@ $main-color: #524b3f;
             @include border_image(12px);
 
             &.right {
-                #file-uploader-area {
-                    //stick it in the top right
-                    position: absolute;
-                    top: 20px;
-                    right: 20px;
-
-                    .file-input {
-                        opacity:0;
-                        width: 0;        
-                    }
-                }
+                
             }
         }
 
@@ -214,6 +220,13 @@ $main-color: #524b3f;
         ::-webkit-scrollbar {
             width: 0px;
             background: transparent;
+        }
+        
+        #file-table {
+            border-collapse: collapse;
+            tr, th, td, thead, tbody {
+                border: 1px solid black;
+            }
         }
     }
     
@@ -444,3 +457,13 @@ $main-color: #524b3f;
     }
 
 }
+
+#image-diff-holder {
+    display: none;
+}
+
+// TEMPORARY
+img {
+    z-index: 9999;
+}
+

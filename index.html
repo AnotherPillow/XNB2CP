@@ -22,7 +22,7 @@
                 height="50"
             />
             <div class="file-disabler-margin">
-                <h1 data-translation-key="choose-content-folder.h1"></h1>
+                <h1 id="big-file-disabler-text" data-translation-key="_placeholder"></h1>
                 <br/>
                 <h2 data-translation-key="file-upload-dialog-opened.h2"></h2>
             </div>
@@ -75,17 +75,46 @@
 
                         <input id="manifest-form-submit" class="hidden" type="submit" data-translation-key="DO NOT CLICK">
                     </form> 
+                    
+                    <div class="horizontal-border" id="manifest-topbottom-seperator"></div>
+
+                    <h2 data-translation-key="content-folder.h2">Content Folder</h2>
+                    <p data-translation-key="content-folder-explanation.p"></p>
+
+                    <form id="">
+                        <span class="file-uploader-area">
+                            <label for="content-file-input" class="file-label">
+                                <img 
+                                    src="assets/files_btn.png"
+                                    alt="Upload"
+                                    class="file-btn clickable"
+                                    width="50"
+                                    height="50"
+                                    id="content-file-btn"
+                                />
+                            </label>
+                            <input 
+                                type="file"
+                                webkitdirectory
+                                directory
+                                multiple
+                                class="file-input"
+                                id="content-file-input" 
+                            />
+                        </span>
+                    </form>
                 </div>  
                 <div class="column right">
                     <h2 data-translation-key="files.h2"></h2>
-                    <span id="file-uploader-area">
-                        <label for="file-input" class="file-label">
+                    <span class="file-uploader-area" id="mod-file-uploader-area">
+                        <label for="xnb-file-input" class="file-label">
                             <img 
                                 src="assets/files_btn.png"
                                 alt="Upload"
                                 class="file-btn clickable"
                                 width="50"
                                 height="50"
+                                id="mod-file-btn"
                             />
                         </label>
                         <input 
@@ -94,7 +123,7 @@
                             directory
                             multiple
                             class="file-input"
-                            id="file-input" 
+                            id="xnb-file-input" 
                         />
                     </span>
 
@@ -112,8 +141,6 @@
                         </table>
                     </div>
                     
-
-
                     <div class="horizontal-border" id="file-area-topbottom-seperator"></div>
 
                     <div class="file-area-bottom">
@@ -142,7 +169,11 @@
             <ul id="languages"></ul>
         </div>
 
+        <canvas id="image-diff-holder"></canvas>
+
         <!-- import https://unpkg.com/file-saver@2.0.0-rc.2/dist/FileSaver.js as FileSaver -->
+        <script src="src/util.js"></script>
+        <script src="src/patcher.js"></script>
         <script src="src/translations.js"></script>
         <script type="module" src="src/imports.js"></script>
         <script src="https://unpkg.com/jszip@3.7.1/dist/jszip.js"></script>

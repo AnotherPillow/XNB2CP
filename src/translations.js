@@ -18,8 +18,9 @@ const supported_languages = {
 
 const lang = navigator.language.split('-')[0]
 
+
 window.loadTranslations = async (_lang = lang) => {
-    const translations = await new Promise(async (resolve, reject) => {
+    window.xtranslations = await new Promise(async (resolve, reject) => {
         const url1 = `/i18n/${_lang}.json`
         const url2 = '/i18n/en.json';
     
@@ -44,10 +45,10 @@ window.loadTranslations = async (_lang = lang) => {
         
     })
     
-    console.log(translations)
+    console.log(xtranslations)
     document.querySelectorAll('[data-translation-key]').forEach(el => {
         const key = el.getAttribute('data-translation-key')
-        const translation = translations[key]
+        const translation = xtranslations[key]
         if (key.includes('placeholder-value')) {
             el.setAttribute('placeholder', translation)
             el.value = translation

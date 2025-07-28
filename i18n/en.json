@@ -1,5 +1,6 @@
 {
-    "choose-content-folder.h1": "Please choose the \"Content\" folder of the XNB mod you want to convert",
+    "choose-content-folder-xnb.h1": "Please choose the \"Content\" folder of the XNB mod you want to convert",
+    "choose-content-folder-content.h1": "Please choose your \"Content (Unpacked)\" folder created by StardewXNBHack",
     "file-upload-dialog-opened.h2": "File upload dialog has been opened",
     "background-credits.p": "Background image is made using assets from <a href=\"https://www.nexusmods.com/stardewvalley/mods/7416\" target=\"_blank\">Custom Menu Background</a>.",
     "text-mod-credits.p": "XNB2CP Web is made possible by <a href=\"https://github.com/lybell-art/xnb-js\" target=\"_blank\">xnb-js</a> by lybell-art which is based on <a href=\"https://github.com/LeonBlade/xnbcli\" target=\"_blank\">xnbcli</a> by LeonBlade. <a href=\"https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher\" target=\"_blank\">Content Patcher</a> is made by Pathoschild.",
@@ -17,6 +18,9 @@
     "version.label": "Version",
 
     "hidden-submission-value.input": "DO NOT CLICK",
+
+    "content-folder.h2": "Upload your Content folder",
+    "content-folder-explanation.p": "You can upload your <a href=\"https://stardewvalleywiki.com/Modding:Editing_XNB_files#Unpack_game_files\" target=\"_blank\">unpacked Content folder</a> to allow for higher-compatibility XNB Mods.",
 
     "files.h2": "Files",
     "file.th": "File",
