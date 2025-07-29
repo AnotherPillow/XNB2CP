@@ -8,7 +8,8 @@
     "sass": "sass --watch src:src",
     "build:sass": "sass src:src",
     "build:go": "cd ./src/go && bun ./build.sh && cd ../..",
-    "build": "npm run build:sass && rm ./src/index.css.map && npm run copy-wasm-exec && npm run build:go",
+    "decache-css": "bun ./css-cache-bypass.sh",
+    "build": "npm run build:sass && rm ./src/index.css.map && npm run decache-css && npm run copy-wasm-exec && npm run build:go",
     "copy-wasm-exec": "bun exec \"cp \\\"$(go env GOROOT)\\\"/misc/wasm/wasm_exec.js ./src/go\""
   },
   "keywords": [],
