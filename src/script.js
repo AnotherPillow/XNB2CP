@@ -93,7 +93,6 @@ class Pack {
 
             return {
                 file: blob,
-                // source: xnb.webkitRelativePath.replace(/\.xnb$/, '.png'),
                 target: cut_path,
                 asset: `assets/${getNonXnbExtension(cut_path, blob)}`
             };
@@ -116,14 +115,11 @@ class Pack {
         }));
 
         this.zip.generateAsync({ type: "blob" }).then(content => {
-            // see FileSaver.js
-            // saveAs(content, "contentpack.zip");
             const url = window.URL.createObjectURL(content);
             const a = document.createElement('a');
             a.href = url;
             a.download = this.manifest_info.manifest_name + '.zip';
             a.classList.add('download-a');
-            // a.innerText = 'Download Now';
             
             const img = document.createElement('img');
             img.src = 'assets/download-btn.png';
@@ -140,12 +136,16 @@ class Pack {
             a.appendChild(h3);
             a.appendChild(img);
 
+            file_download_area.innerHTML = ''
             file_download_area.appendChild(a);
         })
 
     
-    }
-    
+    }   
+}
+
+function fileDownloadLoadingSpinner() {
+    file_download_area.innerHTML = `<i class="fa-solid fa-spinner waitingspinner"></i>`
 }
 
 const xnb_files = [];
@@ -154,6 +154,8 @@ function convert() {
     if (xnb_files.length == 0) return;
 
     const form = Object.fromEntries(new FormData(manifest_form));
+
+    fileDownloadLoadingSpinner()
 
     const pack = new Pack(form, xnb_files);
     pack.convert().then(() => {

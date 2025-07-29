@@ -32,48 +32,6 @@ function imgToImageData(img) {
     return ctx.getImageData(0, 0, img.width, img.height);
 }
 
-class DebugPixelBuffer {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
-        this.buffer = new Uint8ClampedArray(width * height * 4);
-        // Initialize to transparent
-        for (let i = 0; i < this.buffer.length; i += 4) {
-            this.buffer[i + 3] = 0;
-        }
-    }
-
-    draw(callback) {
-        for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.width; x++) {
-                callback(x, y, (r, g, b, a = 255) => {
-                    const idx = (y * this.width + x) * 4;
-                    this.buffer[idx + 0] = r;
-                    this.buffer[idx + 1] = g;
-                    this.buffer[idx + 2] = b;
-                    this.buffer[idx + 3] = a;
-                });
-            }
-        }
-    }
-
-    toImage() {
-        const canvas = document.createElement('canvas');
-        canvas.width = this.width;
-        canvas.height = this.height;
-        const ctx = canvas.getContext('2d');
-        const imageData = ctx.createImageData(this.width, this.height);
-        imageData.data.set(this.buffer);
-        ctx.putImageData(imageData, 0, 0);
-
-        const img = new Image();
-        img.width = this.width;
-        img.height = this.height;
-        img.src = canvas.toDataURL();
-        return img;
-    }
-}
-
 /**
  * @param {number[]} sections 
  * @returns {{x: number, y: number, w: number, h: number}[]} array of rectangles
@@ -157,23 +115,8 @@ function diffImages(a, b, fn) {
                      */
                     const ov = go_diffImagesToOverlay(a.width, a.height, dataA.data, dataB.data)
                     console.log('differing pixels', ov.length)
-                    // const pb = new DebugPixelBuffer(a.width, a.height);
                     
-                    // // runs callback on every pixel
-                    // pb.draw((x, y, setPixel) => {
-                    //     if (ov.includes(pack12x2(x & ~0xF, y & ~0xF)))setPixel(255, 0, 0, 255)
-                    // });
-
-                    // const i = pb.toImage(img_diff_canvas)
-                    // i.setAttribute('data-src-a', a.src)
-                    // i.setAttribute('data-src-b', b.src)
-                    // i.setAttribute('data-src-fn', fn)
-                    // document.body.appendChild(i);
-
-                    // const p = document.createElement('p')
                     const diffBigAreas = generateBiggestPossibleRectangles(Array.from(ov))
-                    // p.innerHTML = `${fn}: \n${JSON.stringify(diffBigAreas, null, 4)}`
-                    // document.body.appendChild(p);
 
                     resolve(diffBigAreas)
                 })
@@ -206,43 +149,7 @@ async function generateChanges(xnb) {
                  * @type {{x: number, y: number, w: number, h: number}[]}
                  */
                 const diffedTiles = await diffImages(sourceFileImage, xnbFileImage, target_clean)
-                // console.log('diffed tile section count: ', diffedTiles.length)
-                // const pb = new DebugPixelBuffer(sourceFileImage.width, sourceFileImage.height)
-                // /**
-                //  * @type {Set<number>}
-                //  */
-                // const pixels = new Set()
-                // /**
-                //  * @type {Set<number>}
-                //  */
-                // const bpixels = new Set()
 
-                // for (const { x, y, width: w, height: h } of diffedTiles) {
-                //     for (let j = 0; j < h; j++) {
-                //         for (let i = 0; i < w; i++) {
-                //             bpixels.add(pack12x2(x + i, y + j)); // background color (dark gray)
-                //         }
-                //     }
-                //     for (let i = 0; i < w; i++) {
-                //         pixels.add(pack12x2(x + i, y)); // top
-                //         pixels.add(pack12x2(x + i, y + h - 1)); // bottom
-                //     }
-                //     for (let j = 1; j < h - 1; j++) {
-                //         pixels.add(pack12x2(x, y + j)); // left
-                //         pixels.add(pack12x2(x + w - 1, y + j)); // right
-                //     }
-                // }
-
-                // console.log('pixels to draw outline', Array.from(pixels.values()))
-
-                // pb.draw((x, y, setPixel) => {
-                //     if (bpixels.has(pack12x2(x, y))) setPixel(60, 60, 60, 100)
-                //     if (pixels.has(pack12x2(x, y))) setPixel(100, 255, 100)
-                // })
-
-                // const i = pb.toImage(img_diff_canvas)
-                // console.log('toimage result outlinehopefully', i)
-                // document.body.appendChild(i)
                 let changes = []
 
                 for (const section of diffedTiles) {
@@ -273,7 +180,7 @@ async function generateChanges(xnb) {
 
     if (xnb.file.type.startsWith('StardewValley')) { // jsonish
         const xnbFileContent = await blobToString(xnb.file.content)
-        // document.body.appendChild(xnbFileContent.sub())
+        
     }
 
     return [

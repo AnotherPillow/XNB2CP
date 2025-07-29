@@ -215,7 +215,8 @@ $main-color: #524b3f;
         
         scrollbar-width: none;
 
-        height: 30vh;
+        min-height: 30vh;
+        max-width: 100%;
 
         ::-webkit-scrollbar {
             width: 0px;
@@ -462,8 +463,24 @@ $main-color: #524b3f;
     display: none;
 }
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.waitingspinner {
+    font-size: 3em;
+    animation: spin 3s ease-in-out infinite;
+}
+
 // TEMPORARY
 img {
     z-index: 9999;
 }
+
+
 
