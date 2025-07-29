@@ -202,7 +202,7 @@ contentfileinput.addEventListener('change', function () {
 
     // `this` is in refence to modfileinput, for clarification
     Array.from(this.files).forEach(file => {
-        CONTENT_FOLDER.set(cleanXnbPath(file.webkitRelativePath.split('/').slice(1).join('/')), file)
+        CONTENT_FOLDER.set(cleanXnbPath(file.webkitRelativePath.split('/').slice(1).join('/')).toLowerCase(), file)
     })
 })
 

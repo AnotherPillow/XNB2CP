@@ -34,7 +34,7 @@ function imgToImageData(img) {
 
 /**
  * @param {number[]} sections 
- * @returns {{x: number, y: number, w: number, h: number}[]} array of rectangles
+ * @returns {{x: number, y: number, width: number, height: number}[]} array of rectangles
  */
 function generateBiggestPossibleRectangles(sections) {
     const possibleTiles = new Set(sections);
@@ -94,7 +94,7 @@ function generateBiggestPossibleRectangles(sections) {
  * @param {HTMLImageElement} a 
  * @param {HTMLImageElement} b 
  * @param {string?} fn 
- * @returns {Promise<{x: number, y: number, w: number, h: number}[]>} array of rectangles of difference
+ * @returns {Promise<{x: number, y: number, width: number, height: number}[]>} array of rectangles of difference
  */
 function diffImages(a, b, fn) {
     console.log('diffimages called')
@@ -132,12 +132,14 @@ function diffImages(a, b, fn) {
  * @returns {Record<string, any>}
  */
 async function generateChanges(xnb) {
+    const target_clean = cleanXnbPath(xnb.target)
+    const sourceFile = CONTENT_FOLDER.get(target_clean.toLowerCase())
+    if (sourceFile == null || sourceFile == undefined) return []
+
     if (xnb.file.type == 'Texture2D') { // image
         const xnbFileImage = await blobToImage(xnb.file.content)
         
-        const target_clean = cleanXnbPath(xnb.target)
         
-        const sourceFile = CONTENT_FOLDER.get(target_clean)
             
         if (sourceFile) {
             const sourceFileImage = await blobToImage(sourceFile)
@@ -155,19 +157,19 @@ async function generateChanges(xnb) {
                 for (const section of diffedTiles) {
                     changes.push({
                         Action: 'EditImage',
-                        Target: xnb.target,
+                        Target: cleanXnbPath(xnb.target),
                         FromFile: xnb.asset,
                         FromArea: {
                             X: section.x,
                             Y: section.y,
-                            Width: section.w,
-                            Height: section.h
+                            Width: section.width,
+                            Height: section.height,
                         },
                         ToArea: {
                             X: section.x,
                             Y: section.y,
-                            Width: section.w,
-                            Height: section.h
+                            Width: section.width,
+                            Height: section.height,
                         },
                         PatchMode: 'Replace'
                     })
@@ -183,10 +185,11 @@ async function generateChanges(xnb) {
         
     }
 
+    console.log(`Loading ${xnb.target} (type: ${xnb.file.type}) (sourcefile: ${sourceFile})`)
     return [
         {
             "Action": "Load",
-            "Target": xnb.target,
+            "Target": cleanXnbPath(xnb.target),
             "FromFile": xnb.asset
         }
     ]

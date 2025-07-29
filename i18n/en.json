@@ -20,7 +20,7 @@
     "hidden-submission-value.input": "DO NOT CLICK",
 
     "content-folder.h2": "Upload your Content folder",
-    "content-folder-explanation.p": "You can upload your <a href=\"https://stardewvalleywiki.com/Modding:Editing_XNB_files#Unpack_game_files\" target=\"_blank\">unpacked Content folder</a> to allow for higher-compatibility XNB Mods.",
+    "content-folder-explanation.p": "You can upload your <a href=\"https://stardewvalleywiki.com/Modding:Editing_XNB_files#Unpack_game_files\" target=\"_blank\">unpacked Content folder</a> to allow for higher-compatibility XNB Mods, at the cost of image performance.",
 
     "files.h2": "Files",
     "file.th": "File",

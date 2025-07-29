@@ -46,7 +46,6 @@ function blobToString(blob) {
  * @returns {Promise<HTMLImageElement>}
  */
 function blobToImage(blob) {
-    console.log('b2i', blob)
     return new Promise((resolve, reject) => {
         console.log('b2i promise inner')
         const url = URL.createObjectURL(blob);
@@ -68,7 +67,7 @@ function blobToImage(blob) {
  * @param {string} p 
  */
 function cleanXnbPath(p) {
-    return p.toLowerCase().replace(/\.[a-z]{1,4}$/, '')
+    return p.replace(/\.[a-zA-Z]{1,4}$/, '')
 }
 
 /**

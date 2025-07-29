@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass": "sass --watch src:src",
-    "build": "sass src:src"
+    "build:sass": "sass src:src",
+    "build:go": "cd ./src/go && bun ./build.sh && cd ../..",
+    "build": "npm run build:sass && npm run copy-wasm-exec && npm run build:go",
+    "copy-wasm-exec": "bun exec \"cp \\\"$(go env GOROOT)\\\"/misc/wasm/wasm_exec.js ./src/go\""
   },
   "keywords": [],
   "author": "AnotherPillow",
