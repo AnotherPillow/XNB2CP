@@ -27,6 +27,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+    
+      - name: Setup Go 1.20.4
+        uses: actions/setup-go@v5
+        with:
+          # 1.20.4 bc local
+          go-version: '1.20.4'
+
+      - name: install bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -44,7 +53,7 @@ jobs:
         run: npm run build
 
       - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           # this should match the `pages` option in your adapter-static options
           path: './'
@@ -60,4 +69,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
