@@ -5,11 +5,12 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 ## Usage
 
 1. Select the XNB mod you want to convert with the files icon.
-2. Navigate and upload to the `Content` folder of the XNB mod. (It must be ordered as if it would go in Content)
+2. On the right, upload the equivalent of the `Content` folder of the XNB mod. (It must be ordered as if it would go in Content)
 3. If your browser prompts you to upload the folder, choose "Upload".
 4. Fill in the manifest fields. (Make sure to credit the original author!)
-5. Click "Done" and wait for the conversion to finish.
-6. Once it finishes, click "Download" to download the converted mod.
+5. If you want to have more a more compatibile mod at the end (at the cost of image performance), upload your own [Content (Unpacked)](https://stardewvalleywiki.com/Modding:Editing_XNB_files#Unpack_game_files) folder on the left. Choose upload if you're promtpde by your browser.
+6. Click "Done" and wait for the conversion to finish.
+7. Once it finishes, click "Download" to download the converted mod.
 
 ## Credits
 
