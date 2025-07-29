@@ -241,7 +241,7 @@ language_button.addEventListener('click', () => {
     language_popup.classList.toggle('hidden')
 })
 
-document.body.addEventListener('click', e => {
+document.querySelector('body').addEventListener('click', e => {
     if (e.target.id !== language_popup.id
         && !language_button.contains(e.target)
         && !language_popup.contains(e.target)
