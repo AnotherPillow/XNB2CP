@@ -101,9 +101,8 @@ class Pack {
 
         this.content = {
             "Format": "1.28.0",
-            "Changes": await Promise.all(this.files.map(async file => {
-                return await generateChange(file)
-            }))
+            "Changes": (await Promise.all(this.files.map(async file => generateChanges(file)))).flat()
+                        
         }
 
         this.zip = new JSZip();

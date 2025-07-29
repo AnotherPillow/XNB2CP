@@ -58,7 +58,6 @@ class DebugPixelBuffer {
     }
 
     toImage() {
-        // Create an offscreen canvas
         const canvas = document.createElement('canvas');
         canvas.width = this.width;
         canvas.height = this.height;
@@ -67,7 +66,6 @@ class DebugPixelBuffer {
         imageData.data.set(this.buffer);
         ctx.putImageData(imageData, 0, 0);
 
-        // Create an HTMLImageElement from the canvas data URL
         const img = new Image();
         img.width = this.width;
         img.height = this.height;
@@ -76,57 +74,121 @@ class DebugPixelBuffer {
     }
 }
 
-// Create worker for image diffing
-const diffWorker = new Worker('src/differ-worker.js');
-
+/**
+ * @param {number[]} sections 
+ * @returns {{x: number, y: number, w: number, h: number}[]} array of rectangles
+ */
+function generateBiggestPossibleRectangles(sections) {
+    const possibleTiles = new Set(sections);
+    const coveredTiles = new Set();
+    const xys = sections.map(n => unpack12x2(n));
+    
+    if (xys.length === 0) return [];
+    
+    const ret = [];
+    
+    for (const [fx, fy] of xys) {
+        const packedStart = pack12x2(fx, fy);
+        if (coveredTiles.has(packedStart)) continue;
+        
+        let maxWidth = 0;
+        for (let x = 0; x < 16 * 8; x += 16) {
+            if (!possibleTiles.has(pack12x2(fx + x, fy)) || 
+                coveredTiles.has(pack12x2(fx + x, fy))) {
+                break;
+            }
+            maxWidth = x + 16;
+        }
+        
+        if (maxWidth === 0) continue;
+        
+        let maxHeight = 0;
+        heightLoop: for (let y = 0; y < 16 * 8; y += 16) {
+            for (let x = 0; x < maxWidth; x += 16) {
+                const packed = pack12x2(fx + x, fy + y);
+                if (!possibleTiles.has(packed) || coveredTiles.has(packed)) {
+                    break heightLoop;
+                }
+            }
+            maxHeight = y + 16;
+        }
+        
+        if (maxHeight === 0) continue;
+        
+        for (let y = 0; y < maxHeight; y += 16) {
+            for (let x = 0; x < maxWidth; x += 16) {
+                coveredTiles.add(pack12x2(fx + x, fy + y));
+            }
+        }
+        
+        ret.push({
+            x: fx,
+            y: fy,
+            width: maxWidth,
+            height: maxHeight,
+        });
+    }
+    
+    return ret;
+}
 /**
  * 
  * @param {HTMLImageElement} a 
  * @param {HTMLImageElement} b 
+ * @param {string?} fn 
  * @returns {Promise<{x: number, y: number, w: number, h: number}[]>} array of rectangles of difference
  */
-function diffImages(a, b) {
-    return new Promise((resolve) => {
-        const dataA = imgToImageData(a);
-        const dataB = imgToImageData(b);
-        
-        const messageId = Date.now() + Math.random();
-        
-        const handleMessage = (event) => {
-            if (event.data.id === messageId) {
-                console.log('received ' + messageId + ' from worker')
-                diffWorker.removeEventListener('message', handleMessage);
-                
-                const diffPixels = event.data.diffPixels;
-                
-                const pb = new DebugPixelBuffer(a.width, a.height);
-                
-                pb.draw((x, y, setPixel) => {
-                    if (diffPixels.includes(`${x & ~0xF},${y & ~0xF}`)) setPixel(255, 0, 0, 255)
-                });
+function diffImages(a, b, fn) {
+    console.log('diffimages called')
+    const dataA = imgToImageData(a);
+    const dataB = imgToImageData(b);
 
-                document.body.appendChild(pb.toImage(img_diff_canvas));
-                resolve([]);
-            }
-        };
-        
-        diffWorker.addEventListener('message', handleMessage);
-        
-        console.log('posting ' + messageId + ' to worker')
-        diffWorker.postMessage({
-            id: messageId,
-            imageDataA: dataA,
-            imageDataB: dataB,
-            width: a.width,
-            height: a.height
-        });
-    });
+    return new Promise((resolve) => {
+        const go = new Go();
+        try {
+            WebAssembly.instantiateStreaming(fetch("/src/go/main.wasm"), go.importObject)
+                .then((result) => {
+                    go.run(result.instance);
+                    
+                    console.log("Go runtime started");
+                    /**
+                     * @type {Uint32Array}
+                     * @description array of the {@link pack12x2}'s result from the top left 
+                     */
+                    const ov = go_diffImagesToOverlay(a.width, a.height, dataA.data, dataB.data)
+                    console.log('differing pixels', ov.length)
+                    // const pb = new DebugPixelBuffer(a.width, a.height);
+                    
+                    // // runs callback on every pixel
+                    // pb.draw((x, y, setPixel) => {
+                    //     if (ov.includes(pack12x2(x & ~0xF, y & ~0xF)))setPixel(255, 0, 0, 255)
+                    // });
+
+                    // const i = pb.toImage(img_diff_canvas)
+                    // i.setAttribute('data-src-a', a.src)
+                    // i.setAttribute('data-src-b', b.src)
+                    // i.setAttribute('data-src-fn', fn)
+                    // document.body.appendChild(i);
+
+                    // const p = document.createElement('p')
+                    const diffBigAreas = generateBiggestPossibleRectangles(Array.from(ov))
+                    // p.innerHTML = `${fn}: \n${JSON.stringify(diffBigAreas, null, 4)}`
+                    // document.body.appendChild(p);
+
+                    resolve(diffBigAreas)
+                })
+                .catch((err) => console.error("WASM load error:", err));
+        } catch (e) {
+            console.error('failed on loading go', e)
+        }
+    })
 }
 
 /**
  * @param {UnpackedXNB} xnb 
+ * @returns {Record<string, any>}
  */
-async function generateChange(xnb) {
+async function generateChanges(xnb) {
     if (xnb.file.type == 'Texture2D') { // image
         const xnbFileImage = await blobToImage(xnb.file.content)
         
@@ -139,7 +201,72 @@ async function generateChange(xnb) {
             if (sourceFileImage.width == xnbFileImage.width
                 && sourceFileImage.height == xnbFileImage.height
             ) {
-                await diffImages(sourceFileImage, xnbFileImage)
+                console.log('calling diffimages on ', xnb.target, target_clean)
+                /**
+                 * @type {{x: number, y: number, w: number, h: number}[]}
+                 */
+                const diffedTiles = await diffImages(sourceFileImage, xnbFileImage, target_clean)
+                // console.log('diffed tile section count: ', diffedTiles.length)
+                // const pb = new DebugPixelBuffer(sourceFileImage.width, sourceFileImage.height)
+                // /**
+                //  * @type {Set<number>}
+                //  */
+                // const pixels = new Set()
+                // /**
+                //  * @type {Set<number>}
+                //  */
+                // const bpixels = new Set()
+
+                // for (const { x, y, width: w, height: h } of diffedTiles) {
+                //     for (let j = 0; j < h; j++) {
+                //         for (let i = 0; i < w; i++) {
+                //             bpixels.add(pack12x2(x + i, y + j)); // background color (dark gray)
+                //         }
+                //     }
+                //     for (let i = 0; i < w; i++) {
+                //         pixels.add(pack12x2(x + i, y)); // top
+                //         pixels.add(pack12x2(x + i, y + h - 1)); // bottom
+                //     }
+                //     for (let j = 1; j < h - 1; j++) {
+                //         pixels.add(pack12x2(x, y + j)); // left
+                //         pixels.add(pack12x2(x + w - 1, y + j)); // right
+                //     }
+                // }
+
+                // console.log('pixels to draw outline', Array.from(pixels.values()))
+
+                // pb.draw((x, y, setPixel) => {
+                //     if (bpixels.has(pack12x2(x, y))) setPixel(60, 60, 60, 100)
+                //     if (pixels.has(pack12x2(x, y))) setPixel(100, 255, 100)
+                // })
+
+                // const i = pb.toImage(img_diff_canvas)
+                // console.log('toimage result outlinehopefully', i)
+                // document.body.appendChild(i)
+                let changes = []
+
+                for (const section of diffedTiles) {
+                    changes.push({
+                        Action: 'EditImage',
+                        Target: xnb.target,
+                        FromFile: xnb.asset,
+                        FromArea: {
+                            X: section.x,
+                            Y: section.y,
+                            Width: section.w,
+                            Height: section.h
+                        },
+                        ToArea: {
+                            X: section.x,
+                            Y: section.y,
+                            Width: section.w,
+                            Height: section.h
+                        },
+                        PatchMode: 'Replace'
+                    })
+                }
+
+                return changes;
             }
         }
     }
@@ -149,9 +276,11 @@ async function generateChange(xnb) {
         // document.body.appendChild(xnbFileContent.sub())
     }
 
-    return {
-        "Action": "Load",
-        "Target": xnb.target,
-        "FromFile": xnb.asset
-    }
+    return [
+        {
+            "Action": "Load",
+            "Target": xnb.target,
+            "FromFile": xnb.asset
+        }
+    ]
 }

@@ -14,7 +14,6 @@ function clean_uid(input) {
 }
 
 function blobToBase64(blob) {
-    console.log(blob)
     return new Promise((resolve, _) => {
         const reader = new FileReader();
         if (blob.content) reader.readAsDataURL(blob.content);
@@ -49,6 +48,7 @@ function blobToString(blob) {
 function blobToImage(blob) {
     console.log('b2i', blob)
     return new Promise((resolve, reject) => {
+        console.log('b2i promise inner')
         const url = URL.createObjectURL(blob);
         const img = new Image();
         img.onload = () => {
@@ -57,7 +57,7 @@ function blobToImage(blob) {
         };
         img.onerror = (err) => {
             URL.revokeObjectURL(url);
-            reject(err);
+            resolve(null)
         };
         img.src = url;
     });
@@ -69,4 +69,26 @@ function blobToImage(blob) {
  */
 function cleanXnbPath(p) {
     return p.toLowerCase().replace(/\.[a-z]{1,4}$/, '')
+}
+
+/**
+ * Packs two 12-bit numbers (0-4095) into a single 24-bit number.
+ * @param {number} a - First number (0-4095)
+ * @param {number} b - Second number (0-4095)
+ * @returns {number} Packed 24-bit number
+ */
+function pack12x2(a, b) {
+    return ((a & 0xFFF) << 12) | (b & 0xFFF);
+}
+
+/**
+ * Unpacks two 12-bit numbers (0-4095) from a single 24-bit number.
+ * @param {number} packed - Packed 24-bit number
+ * @returns {[number, number]} Array with [a, b]
+ */
+function unpack12x2(packed) {
+    return [
+        (packed >> 12) & 0xFFF,
+        packed & 0xFFF
+    ];
 }

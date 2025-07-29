@@ -2,3 +2,6 @@
 *.css.map
 node_modules/
 test/
+*.wasm
+
+src/go/wasm_exec.js
