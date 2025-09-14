@@ -134,9 +134,8 @@ function diffImages(a, b, fn) {
 async function generateChanges(xnb) {
     const target_clean = cleanXnbPath(xnb.target)
     const sourceFile = CONTENT_FOLDER.get(target_clean.toLowerCase())
-    if (sourceFile == null || sourceFile == undefined) return []
 
-    if (xnb.file.type == 'Texture2D') { // image
+    if (sourceFile && xnb.file.type == 'Texture2D') { // image
         const xnbFileImage = await blobToImage(xnb.file.content)
         
         
@@ -180,7 +179,7 @@ async function generateChanges(xnb) {
         }
     }
 
-    if (xnb.file.type.startsWith('StardewValley')) { // jsonish
+    if (sourceFile && xnb.file.type.startsWith('StardewValley')) { // jsonish
         const xnbFileContent = await blobToString(xnb.file.content)
         
     }
