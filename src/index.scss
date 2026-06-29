@@ -44,9 +44,9 @@ input.stardew[type="text"], input.stardew[type="number"], input.stardew:not([typ
 }
 
 body {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: "Ubuntu", sans-serif;
 
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 
@@ -57,6 +57,8 @@ body {
 
     overflow-x: hidden;
     overflow-y: auto;
+
+    --font-factor: 1;
 }
 
 // narrow screens
@@ -65,6 +67,15 @@ body {
         margin-top: 5vh;
         margin-bottom: 5vh;
     }    
+}
+
+@media (max-width: 1000px) and (hover: none) { // will only apply to mouseless things, as in, phones
+    body {
+        --font-factor: 2;
+    }
+    #columns {
+        flex-direction: column;
+    }
 }
 
 .blur {
@@ -97,6 +108,14 @@ body {
     //@include border_image_side(8px, bottom);
 }
 
+p:not(#bottom-attr-text), label, input {
+    font-size: calc(1em * var(--font-factor))
+}
+
+h2 { font-size: calc(1.5em * var(--font-factor)) }
+
+h3 { font-size: calc(1.3em * var(--font-factor)) }
+
 $main-height: 80vh;
 $main-width: 80vw;
 
@@ -122,7 +141,7 @@ $main-color: #524b3f;
 
     #title {
         h1 {
-            font-size: 3rem;
+            font-size: calc(3rem * var(--font-factor));
             font-weight: 700;
             text-align: center;
         }
@@ -222,6 +241,7 @@ $main-color: #524b3f;
         }
 
     }
+
     #file-list {
         overflow-y: scroll;
         
@@ -347,7 +367,7 @@ $main-color: #524b3f;
         }
 
         i {
-            font-size: 5rem;
+            font-size: calc(5rem * var(--font-factor));
             position: fixed;
 
             bottom: -1.5rem;
@@ -396,6 +416,10 @@ $main-color: #524b3f;
         
         color: black;
         text-align: center;
+
+        p#bottom-attr-text {
+            font-size: 1.3em;
+        }
 
         a {
             color: rgb(12, 12, 12);
@@ -454,7 +478,7 @@ $main-color: #524b3f;
         list-style-type: none;
         
         padding-left: 0;
-        font-size: 1.5em;
+        font-size: calc(1.5em * var(--font-factor));
 
         li:not(:last-child) {
             margin-bottom: -1em;
@@ -485,6 +509,6 @@ $main-color: #524b3f;
 }
 
 .waitingspinner {
-    font-size: 3em;
+    font-size: calc(3em * var(--font-factor));
     animation: spin 3s ease-in-out infinite;
 }
