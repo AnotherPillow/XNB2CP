@@ -16,6 +16,7 @@ This is yet another rewrite of [XNB2CP-js](https://github.com/anotherpillow/xnb2
 
 - XNB-js by [lybell-art](https://github.com/lybell-art/xnb-js)
 - [Custom Menu Background](https://www.nexusmods.com/stardewvalley/mods/7416) by [herbivoor](https://www.nexusmods.com/stardewvalley/users/78936668)
+- [the xnb icon](./favicon.png) is made by [aviroen](https://aviroen.gay)
 
 ## Translations
 
