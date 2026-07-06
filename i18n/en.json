@@ -27,5 +27,7 @@
     "size.th": "Size",
     "path.th": "Path",
     
-    "language.h2": "Language"
+    "language.h2": "Language",
+
+    "successful-conversion.h3": "Successfully converted %MANIFEST_NAME%!"
 }

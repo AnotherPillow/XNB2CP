@@ -23,27 +23,29 @@ window.loadTranslations = async (_lang = lang) => {
     window.xtranslations = await new Promise(async (resolve, reject) => {
         const url1 = `/i18n/${_lang}.json`
         const url2 = '/i18n/en.json';
-    
-        if (lang in supported_languages) {
+        
+        let translations = {};
+        
+        if (_lang in supported_languages && _lang !== 'en') {
             const response1 = await fetch(url1);
-        
-            if (response1.ok) {
-                // If the first URL exists, return its JSON content
-                resolve(await response1.json())
-                return;
-            }
-        } else {
-            const response2 = await fetch(url2);
-        
-            if (response2.ok) {
-                resolve(await response2.json())
-                return;
-            }
+            
+            if (response1.ok) translations = await response1.json();
         }
-      
-        reject(null)
         
+        const response2 = await fetch(url2);
+        
+        if (response2.ok) {
+            const englishTranslations = await response2.json();
+            translations = { ...englishTranslations, ...translations };
+        }
+        
+        if (Object.keys(translations).length > 0) {
+            resolve(translations);
+        } else {
+            reject(null);
+        }
     })
+    
     
     console.log(xtranslations)
     document.querySelectorAll('[data-translation-key]').forEach(el => {

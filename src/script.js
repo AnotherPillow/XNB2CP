@@ -2,6 +2,7 @@
 /// <reference path="translations.js" />
 /// <reference path="util.js" />
 /// <reference path="patcher.js" />
+/// <reference path="node_modules/@types/umami" />
 
 const modfileinput = document.querySelector('#xnb-file-input');
 const contentfileinput = document.querySelector('#content-file-input');
@@ -120,6 +121,7 @@ class Pack {
             a.href = url;
             a.download = this.manifest_info.manifest_name + '.zip';
             a.classList.add('download-a');
+            a.addEventListener('click', () => umami.track('cp-mod-exported'))
             
             const img = document.createElement('img');
             img.src = 'assets/download-btn.png';
@@ -129,9 +131,10 @@ class Pack {
             img.height = 52;
 
             const h3 = document.createElement('h3');
-            h3.innerText = `Successfully converted ${this.manifest_info.manifest_name}!`;
+            h3.innerText = window.xtranslations['successful-conversion.h3'].replace('%MANIFEST_NAME%', this.manifest_info.manifest_name)
             h3.classList.add('download-h');
 
+            umami.track('cp-conversion-complete')
             
             a.appendChild(h3);
             a.appendChild(img);
@@ -195,6 +198,8 @@ modfileinput.addEventListener('change', function () {
     })
 
     populateFilesTable(xnb_files);
+
+    umami.track('xnb-mod-uploaded')
 });
 
 contentfileinput.addEventListener('change', function () {
