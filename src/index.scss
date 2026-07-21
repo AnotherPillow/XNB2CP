@@ -408,7 +408,7 @@ $main-color: #524b3f;
     }
 
     .text-credits {
-        position: fixed;
+        position: absolute;
         width: calc($main-width + 20px);
 
         top: calc($main-top + $main-height + 48px);
