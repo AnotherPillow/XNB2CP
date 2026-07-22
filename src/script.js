@@ -105,14 +105,17 @@ class Pack {
                         
         }
 
+        // too aggressive i know, but better to just be safe with the allowed characters
+        const cleanedManifestName = this.manifest.Name.replace(/[^a-zA-Z0-9\-_. ]/g, "") || 'mod'
+
         this.zip = new JSZip();
-        this.zip.file('manifest.json', JSON.stringify(this.manifest, null, 4));
-        this.zip.file('content.json', JSON.stringify(this.content, null, 4));
+        this.zip.file(cleanedManifestName + '/manifest.json', JSON.stringify(this.manifest, null, 4));
+        this.zip.file(cleanedManifestName + '/content.json', JSON.stringify(this.content, null, 4));
 
         await Promise.all(this.files.map(async file => {
             const b64 = (await blobToBase64(file.file)).split(',')[1];
             
-            this.zip.file(file.asset, b64, { base64: true });
+            this.zip.file(cleanedManifestName + '/' + file.asset, b64, { base64: true });
         }));
 
         this.zip.generateAsync({ type: "blob" }).then(content => {

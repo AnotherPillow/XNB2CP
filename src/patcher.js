@@ -137,8 +137,6 @@ async function generateChanges(xnb) {
 
     if (sourceFile && xnb.file.type == 'Texture2D') { // image
         const xnbFileImage = await blobToImage(xnb.file.content)
-        
-        
             
         if (sourceFile) {
             const sourceFileImage = await blobToImage(sourceFile)
@@ -179,12 +177,60 @@ async function generateChanges(xnb) {
         }
     }
 
-    if (sourceFile && xnb.file.type.startsWith('StardewValley')) { // jsonish
+    if (sourceFile && xnb.file.type.startsWith('StardewValley') || xnb.file.type == 'JSON') { // json
         const xnbFileContent = await blobToString(xnb.file.content)
-        
+
+        // will just inline the changes, not ideal but it's fine. will remove identical fields. should make this auto detect string->string dictionaries but whatever
+        if (xnb.target.startsWith('Characters/Dialogue/')
+            || xnb.target.startsWith('Characters/schedules/')
+            || xnb.target.startsWith('Strings/')
+            || xnb.target.startsWith('Data/NPCGiftTastes') // .json
+            || xnb.target.startsWith('Data/Events/')
+        ) {
+            console.log(`editdata-ing a string->string dictionary file`)
+            const sourceText = await blobToString(sourceFile)
+            const sourceJSON = await JSON.parse(sourceText)
+            /**
+             * @type {Record<string, string>}
+             */
+            let xnbJSON = {}
+            
+            try {
+                xnbJSON = JSON.parse(xnbFileContent)
+            } catch (e) {
+
+            }
+
+            if (Object.keys(xnbJSON).length > 0) {
+                console.log(`patching ${xnb.target} with Entries (${Object.keys(xnbJSON)}) from ${xnb.file}`)
+
+                /**
+                 * @type {Record<string, string>}
+                 */
+                let deduplicatedFields = {}
+
+                for (const key of Object.keys(xnbJSON)) {
+                    if (sourceJSON[key] && sourceJSON[key] == xnbJSON[key]) {
+                        console.log(`${key} is identical in mod and actual content, skipping`)
+                        continue;
+                    }
+                    console.log(`key ${key} is changed/new in the mod`)
+                    deduplicatedFields[key] = xnbJSON[key]
+                }
+                
+
+                return [
+                    {
+                        "Action": "EditData",
+                        "Target": cleanXnbPath(xnb.target),
+                        "Entries": deduplicatedFields,
+                    }
+                ]
+            }
+        }
     }
 
-    console.log(`Loading ${xnb.target} (type: ${xnb.file.type}) (sourcefile: ${sourceFile})`)
+    console.log(`Loading ${xnb.target} (type: ${xnb.file.type}) (sourcefile: ${xnb.file})`)
     return [
         {
             "Action": "Load",
